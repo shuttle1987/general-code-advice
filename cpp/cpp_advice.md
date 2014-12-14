@@ -23,6 +23,48 @@ selectively bring in just the names you need by doing:
 an so on. This cuts down on typing without the downside of polluting the global namespace.
 
 
+Constructors
+============
+
+Prefer initialization list
+--------------------------
+
+C++ beginners will sometimes write code like this that uses assignment to initialize members:
+
+    struct point{
+        float x, y;
+        point(){
+            x=0; y=0;
+        }
+        point(float aX, float aY){
+            x = aX; y = aY;
+        }
+    };
+    
+However using the [member initializer list](http://en.cppreference.com/w/cpp/language/initializer_list)
+is usually a better way of initializing variables with the constructor.
+
+    struct point{
+        float x, y;
+        point():
+            x(0),
+            y(0)
+        {
+        }
+        point(float aX, float aY):
+            x(aX),
+            y(aY)
+        {
+        }
+    }; 
+
+Doing it this way ensures that members get correctly initialized and this format can also
+provide the compiler opportunities to optimize the code generated.
+For the inbuilt default types `int`, `char`, etc. there is no performance difference but
+for user defined types there can be.
+
+See the [c++ FAQ entry](http://www.parashift.com/c++-faq/init-lists.html) for more on this topic.
+
 Standard containers
 ===================
 
