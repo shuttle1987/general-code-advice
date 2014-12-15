@@ -23,6 +23,31 @@ selectively bring in just the names you need by doing:
 an so on. This cuts down on typing without the downside of polluting the global namespace.
 
 
+Parameters
+==========
+
+Prefer pass by reference to const
+---------------------------------
+
+Say you have a function:
+
+    foo(my_class_t bar){
+        //function that doesn't change bar
+    }
+
+It's preferable to instead pass this parameter by reference to const like so:
+
+    foo(my_class_t const& bar){
+        //function that doesn't change bar
+    }
+
+There's 2 main reasons to do this:
+
+  1. You no longer need to make a unnecessary copy of the `bar` for your function
+  2. You more clearly state your intent with the code, any change to `bar` will now
+     throw an error at compile time. This can prevent undesirable things from happening.
+
+
 Constructors
 ============
 
